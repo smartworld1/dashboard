@@ -1,0 +1,78 @@
+<div id="home" class="page-layout simple fullwidth " >
+    <div class="header " layout="row" layout-align="space-between center">
+       <div layout="column" layout-align="start start">
+          <div class="h1" layout="row" layout-align="start center">
+             <span>Tours</span>
+          </div>
+       </div>
+       <div class="search" layout="row" layout-align="start center" flex>
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input  class="search-input" ng-model="vm.query.filter" type="text" placeholder="Buscar"
+                        flex ng-model-options="{debounce: 1000}">
+       </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="content">
+        <md-card>
+            <md-table-container>
+                <table  md-table  md-table md-row-select="vm.options.rowSelection" multiple="{{vm.options.multiSelect}}" ng-model="vm.selected" md-progress="vm.promise">
+                  <thead md-head md-order="vm.query.order" >
+                       <tr md-row >
+                        <th md-column>Fecha</th>
+                        <th md-column>Nombre</th> 
+                        <th md-column>Horario</th>
+                        <th md-column>Descripción</th>
+                        <th md-column>Lugar</th> 
+                        <th md-column>Ver Imagen</th>
+                        <th md-column>Editar Imagen</th>
+                        <th md-column>Editar Info</th>
+                        <th md-column>Borrar</th> 
+                       </tr>
+                   </thead>
+                   <tbody md-body>
+        
+                   <tr  md-row  md-select="item" md-on-select="vm.logItem" md-auto-select="vm.options.autoSelect" ng-repeat="item in  [0,1,2,4,5] | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+                    <td md-cell>{{item.eventDate.seconds * 1000 | date:'dd-MM-yy'}}</td> 
+                    <td md-cell>{{item.name}}</td>
+                    <td md-cell>{{item.hour }}</td>
+                    <td md-cell>{{item.description}}</td>
+
+                    <td md-cell>{{item.id }}</td>
+                    <td md-cell>
+                        <md-button class="md-icon-button" ng-click="vm.openImg($event,item)" aria-label="Empresa detalle">
+                                <md-icon md-font-icon="icon-link" class="s16"></md-icon>
+
+                        </md-button>
+                    </td>
+                    <td md-cell>
+                            <md-button class="md-icon-button" ng-click="vm.editImg($event,item,true)" aria-label="Empresa detalle">
+                                        <md-icon md-font-icon="icon-file-image-box" class="s16"></md-icon>
+                            </md-button>
+                    </td>
+                    <td md-cell>
+                        <md-button class="md-icon-button" ng-click="vm.openModal($event,item)" aria-label="Empresa detalle">
+                                    <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                        </md-button>
+                    </td>
+                    <td md-cell>
+                        <md-button class="md-icon-button" ng-click="vm.deleteItem($event,item)" aria-label="Empresa detalle">
+                                    <md-icon md-font-icon="icon-cancel" class="s16"></md-icon>
+                        </md-button>
+                    </td>
+                     
+                   </tr>
+        
+        
+                   </tbody>
+                   </table>
+             </md-table-container>
+             <md-table-pagination 
+                                md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"
+                                md-limit="vm.query.limit" md-limit-options="[5, 25, 50]" md-page="vm.query.page"
+                                md-total="{{vm.items.length}}" md-page-select>
+             </md-table-pagination>
+
+       </md-card>
+    </div>
+    <!-- / CONTENT -->
+ </div>

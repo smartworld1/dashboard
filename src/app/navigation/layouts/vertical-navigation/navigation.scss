@@ -1,0 +1,106 @@
+#vertical-navigation {
+    width: $navigationWidth;
+    min-width: $navigationWidth;
+    max-width: $navigationWidth;
+    overflow-x: hidden;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2), width 0.1s linear, min-width 0.1s linear, max-width 0.1s linear;
+
+    .navigation-header {
+        height: 150px;
+        min-height: 150px;
+        padding: 0 26px 0 26px;
+        background-color:#fff; 
+
+        .logo {
+            width: 150px;
+            margin:0 auto;
+            .logo-image {
+              
+            }
+
+        }
+
+        .fold-toggle {
+            transition: transform 0.3s ease-in-out 0.1s;
+            top:15px;
+            right: 20px;
+            padding: 8px;
+            width: 34px !important;
+            height: 34px !important;
+            cursor: pointer;
+            position: absolute;
+            color: #000;
+    
+        }
+    }
+    
+ 
+   
+
+    
+}
+
+// Folded navigation
+@media only screen and (min-width: $layout-breakpoint-sm) {
+
+    .ms-navigation-folded {
+
+        #content-container {
+            margin-left: $navigationFoldedWidth;
+        }
+
+        #vertical-navigation {
+            position: absolute;
+
+            .navigation-header {
+
+                .fold-toggle {
+                    transform: rotate(180deg);
+                    opacity: 0;
+                }
+            }
+        }
+
+        &.ms-navigation-folded-open {
+
+            #vertical-navigation {
+
+                .navigation-header {
+
+                    .fold-toggle {
+                        transition: transform 0.3s ease-in-out 0.1s, opacity 0.3s ease-in-out 0.2s;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        &:not(.ms-navigation-folded-open) {
+
+            #vertical-navigation {
+                position: absolute;
+                width: $navigationFoldedWidth;
+                min-width: $navigationFoldedWidth;
+                max-width: $navigationFoldedWidth;
+
+                .navigation-header {
+                    padding: 6px 0px;
+                    .logo {
+
+                        .logo-image {
+                          padding: 0 5px;
+                        }
+
+                    }
+                }
+
+                
+          
+   
+            }
+        }
+    }
+
+    
+
+}

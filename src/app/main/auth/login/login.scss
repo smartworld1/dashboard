@@ -1,0 +1,117 @@
+#login {
+    height: 100%;
+    #login-form-wrapper {
+        flex: 1 0 auto;
+        padding: 32px;
+        #login-form {
+            width: 280px;
+            max-width: 280px;
+            .logo{
+                margin: 0 auto;
+                margin-bottom: 26px;
+            }
+            .title {
+                font-size: 17px;
+                margin: 16px 0 32px 0;
+            }
+            form {
+                width: 100%;
+                text-align: left;
+                
+                md-input-container:not(.md-input-invalid) .md-input {
+                    border-color:#C6C6C5;
+                }
+
+                md-input-container {
+                  input {
+                   
+                    font-family: 'OpenSans';
+                    color:#4B4A4A;
+                    
+                  }
+
+
+                  input::-webkit-input-placeholder {
+                    font-family: 'OpenSans';
+                    color:#4B4A4A;
+                  }
+
+                  input:-moz-placeholder {
+                    font-family: 'OpenSans';
+                    color:#4B4A4A;
+                  }
+
+                  input::-moz-placeholder {
+                    font-family: 'OpenSans';
+                    color:#4B4A4A;
+                  }
+
+                  input:-ms-input-placeholder {
+                    font-family: 'OpenSans';
+                    color:#4B4A4A;
+                  }
+                }
+              
+                md-checkbox.remember-me .md-icon {
+                 border-color:#C6C6C5;
+                 background-color: #C6C6C5;
+                }
+
+                md-checkbox.md-checked.remember-me .md-icon {
+                  border-color:#C6C6C5;   
+                 background-color: #C6C6C5;
+                 &:after{
+                    border-color:#000;
+                 }
+                }
+
+                .remember-forgot-password {
+                    font-size: 13px;
+                    margin-top: 16px;
+                    margin-bottom: 16px;
+                    .remember-me {
+                        margin-bottom: 16px;
+                        .md-label{
+                           color:#4B4A4A;
+                        }
+                        
+                    }
+
+                    .forgot-password {
+                        font-size: 13px;
+                        font-weight: 500;
+                        margin-bottom: 16px;
+                        color:#000;
+                    }
+                }
+
+                .submit-button {
+                    width: 280px;
+                    margin: 0;
+                    border-radius: 25px;
+                    box-shadow:initial;
+                    color:rgba(255,255,255,1);
+
+                }
+            }
+
+            .marca{
+                color:#4B4A4A;
+                
+            }            
+           
+        }
+    }
+}
+
+
+
+.forgot-password{
+    md-dialog-content{
+        padding: 24px;
+       
+    }
+    md-dialog-actions .md-button:not([disabled]){
+        color:#000;
+    }
+}

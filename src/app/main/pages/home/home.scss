@@ -1,0 +1,95 @@
+#home {
+    > .header {
+        height: 86px !important;
+        min-height: 86px !important;
+        max-height: 86px !important;
+        padding: 24px !important;
+        background-color:#EFC304;
+
+        .h1{
+            color:#fff;
+            font-size: 24px;
+        }
+        .search {
+            position: relative;
+            padding-left: 24px;
+            max-width: 480px;
+
+            .search-icon {
+                margin: 0 -24px 0 0;
+            }
+
+            .search-input {
+                margin: 0 0 0 32px;
+                background: none;
+                font-size: 16px;
+                line-height: 40px;
+                height: 40px;
+                color: #FFFFFF;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                transition: border-color 300ms ease;
+
+                &:focus {
+                    border-color: rgba(255, 255, 255, 1);
+                }
+
+                &::-webkit-input-placeholder {
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+
+        md-button {
+            padding: 0 8px;
+            min-width: 45px;
+
+            span {
+                margin-left: 4px;
+            }
+        }
+    }
+
+    > .content {
+            padding:16;
+
+            
+    }
+}
+
+.home-dialog {
+    max-width: 400px;
+    width: 400px;
+
+
+    md-toolbar {
+        background-color: #EFC304!important;
+        .title {
+            font-size: 16px;
+        }
+    }
+    md-dialog-content {
+        display: block;
+        position: relative;
+        .error-file{
+            font-size: 12px;
+            line-height: 14px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+            opacity: 1;
+            margin-top: 0;
+            padding-top: 5px;
+        }
+
+    }
+    
+    md-dialog-actions {
+        position: relative;
+        overflow-y: hidden;
+        overflow-x: auto;
+        justify-content: space-between;
+        background-color: rgba(0, 0, 0, 0.03);
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    
+}

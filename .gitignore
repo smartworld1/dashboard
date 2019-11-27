@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+.sass-cache/
+.idea/
+.tmp/
+dist/
+deploy.sh
