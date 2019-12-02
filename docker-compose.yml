@@ -1,0 +1,18 @@
+  
+version: '3'
+services:
+  dashboard:
+    networks: 
+      - traefik-proxy
+    image: "smartworld1/dashboard:latest"
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.frontend.rule=Host:admin.aplitur.com"
+        - "traefik.port=80"
+        - "traefik.docker.network=traefik-proxy"
+        - "traefik.webservice.frontend.entryPoints=https"
+        - "traefik.redirectorservice.frontend.redirect.entryPoint=https"
+networks:
+  traefik-proxy:
+    external: true

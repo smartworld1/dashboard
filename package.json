@@ -1,9 +1,11 @@
 {
-  "name": "fuse",
+  "name": "dashboard",
   "version": "1.4.3",
   "dependencies": {},
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "docker:build": "docker build -t smartworld1/$npm_package_name:$npm_package_version . && docker tag  smartworld1/$npm_package_name:$npm_package_version smartworld1/$npm_package_name:latest ",
+    "docker:push": "docker push smartworld1/$npm_package_name:$npm_package_version && docker push smartworld1/$npm_package_name:latest"
   },
   "devDependencies": {
     "browser-sync": "~2.9.11",
