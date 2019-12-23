@@ -6,7 +6,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($scope, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, $log, authService, msNavigationService) {
+    function ToolbarController($scope, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, $log, authService, msNavigationService,localStorageService) {
         var vm = this;
 
         // Data
@@ -50,6 +50,8 @@
          */
         function init() {
             vm.selectedLanguage = vm.languages[$translate.preferredLanguage()];
+            vm.customer = localStorageService.get('usuario');
+            console.log(vm.customer)
         }
 
 

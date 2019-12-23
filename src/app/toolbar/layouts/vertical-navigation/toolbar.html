@@ -5,7 +5,9 @@
                    translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION">
             <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
         </md-button>
+       
         <!-- <ms-shortcuts></ms-shortcuts> -->
+        <div id="wellcome" show-gt-sm> Bienvenido <span>{{vm.customer.nombre}}</span></div>
 
     </div>
 
@@ -32,7 +34,7 @@
                                      class="icon status s16">
                             </md-icon>
                         </div>
-                        <span class="username" hide show-gt-sm>{{vm.customer.email}}</span>
+                        <span class="username" show-gt-sm>{{vm.customer.email}}</span>
                         <md-icon md-font-icon="icon-chevron-down"
                                  class="icon s16" hide-xs></md-icon>
                     </div>

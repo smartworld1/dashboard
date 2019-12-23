@@ -13,6 +13,14 @@
         border-radius: 0;
     }
 
+    #wellcome{
+        font-family: 'OpenSans';
+        margin: 0 16px;
+        span{
+            font-family: 'OpenSans-Bold';
+
+        }
+    }
     #user-menu {
         height: $toolbarHeight;
         padding: 0;

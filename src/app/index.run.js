@@ -40,28 +40,16 @@
             stateChangeStartEvent();
             stateChangeSuccessEvent();
         });
-        
-    
-       
-        var restrictedPage = $.inArray($location.path(), ['/','/reset']) === -1;
+
+
+        var restrictedPage = $.inArray($location.path(), ['/']) === -1;
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // firebase.auth().onAuthStateChanged(function(user) {
-            //     console.log(user);
-            //     if(user && $location.path()!='/'){
-            //         authService.isAdmin(user).then(function(isAdmin) {
-            //             if(!isAdmin )
-            //                 $location.path('/');
-
-                          
-            //         })
-            //     }      
-            //     if (restrictedPage && !user) {
-            //         $location.path('/');
-            //     }
-                
-            // });
-
-                   
+            if (restrictedPage && !authService.isAuth()) {
+                $location.path('/');
+            } 
+            if ($location.path()=='/' && authService.isAuth()) {
+                $location.path('/home');
+            }            
         });
 
         

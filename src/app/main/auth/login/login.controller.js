@@ -6,7 +6,7 @@
     .controller("LoginController", LoginController);
 
   /** @ngInject */
-  function LoginController($rootScope, $scope, $state, $log, $mdDialog,authService,$timeout) {
+  function LoginController($rootScope, $scope, $state, $log, $mdDialog,authService,$timeout,localStorageService) {
     var vm = this;
     vm.login = login;
     vm.isLoading = false;
@@ -26,32 +26,31 @@
 
     function login() {
       $rootScope.loader = true;
-      authService.login(
-        vm.loginForm.email,
-        vm.loginForm.password)
-        .then(function(){
-            $state.go('app.pages.home');
+      var user ={
+        email: vm.loginForm.email,
+        nombre: vm.loginForm.email,
+        pass: vm.loginForm.password
+      }
+
+      authService.login(user
+       )
+        .then(function(response){
+            if(!response.ok){
+                $scope.loginForm['password'].$setValidity('auth/wrong-password', false);
+            }else{
+                localStorageService.set('token',response.token);
+                authService.getUser().then(function(response){
+                    console.log(response.usuario);
+                    localStorageService.set('usuario',response.usuario);
+                    $state.go('app.pages.home');
+                })
+            }
           
         }).catch(function(error) {
           $log.error(error);
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          switch (errorCode) {
-            case 'auth/wrong-password':
-            $scope.loginForm['password'].$setValidity('auth/wrong-password', false);
-            break;
-            case 'auth/user-not-found':
-            $scope.loginForm['email'].$setValidity('auth/user-not-found', false);
-            break;
-           
-            default:
-              break;
-          }
-        
         })
         .finally(function() {
           $rootScope.loader = false;
-          $scope.$apply();
         });
     }
 

@@ -4,10 +4,10 @@
   angular.module("app.pages.home").controller("HomeController", HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _) {
+  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
     var vm = this;
     var deferred = $q.defer();
-    vm.houses = [];
+    vm.tours = [];
 
     // Methods
     vm.deleteItem = deleteItem;
@@ -44,7 +44,15 @@
       };
 
       vm.promise = deferred.promise;
-      deferred.resolve();
+      tourService.getTours().then(function(tours){
+        vm.tours = tours.response;
+        console.log( vm.tours)
+        deferred.resolve();
+      }).catch(function(error){
+          $log.error(error);
+
+      })
+     
     
     }
 

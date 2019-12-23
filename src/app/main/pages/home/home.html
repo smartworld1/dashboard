@@ -18,47 +18,29 @@
                 <table  md-table  md-table md-row-select="vm.options.rowSelection" multiple="{{vm.options.multiSelect}}" ng-model="vm.selected" md-progress="vm.promise">
                   <thead md-head md-order="vm.query.order" >
                        <tr md-row >
-                        <th md-column>Fecha</th>
-                        <th md-column>Nombre</th> 
-                        <th md-column>Horario</th>
-                        <th md-column>Descripción</th>
-                        <th md-column>Lugar</th> 
-                        <th md-column>Ver Imagen</th>
-                        <th md-column>Editar Imagen</th>
-                        <th md-column>Editar Info</th>
-                        <th md-column>Borrar</th> 
+                        <th md-column>Nombre</th>
+                        <th md-column>Pais</th> 
+                        <th md-column>Ciudad</th> 
+                        <th md-column>Estado</th>
+                        <th md-column>Tipo</th>
+                        <th md-column>Punto de encuentro</th> 
                        </tr>
                    </thead>
                    <tbody md-body>
         
-                   <tr  md-row  md-select="item" md-on-select="vm.logItem" md-auto-select="vm.options.autoSelect" ng-repeat="item in  [0,1,2,4,5] | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
-                    <td md-cell>{{item.eventDate.seconds * 1000 | date:'dd-MM-yy'}}</td> 
-                    <td md-cell>{{item.name}}</td>
-                    <td md-cell>{{item.hour }}</td>
-                    <td md-cell>{{item.description}}</td>
-
-                    <td md-cell>{{item.id }}</td>
-                    <td md-cell>
+                   <tr  md-row  md-select="item" md-on-select="vm.logItem" md-auto-select="vm.options.autoSelect" ng-repeat="item in vm.tours | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+                    <td md-cell>{{item.nombre}}</td>
+                    <td md-cell>{{item.pais}}</td>
+                    <td md-cell>{{item.ciudad}}</td>
+                    <td md-cell>{{item.estado?'Activa':'Inactiva'}}</td>
+                    <td md-cell>{{item.type}}</td>
+                    <td md-cell>{{item.puntoEncuento}}</td>
+                    <!-- <td md-cell>
                         <md-button class="md-icon-button" ng-click="vm.openImg($event,item)" aria-label="Empresa detalle">
                                 <md-icon md-font-icon="icon-link" class="s16"></md-icon>
 
                         </md-button>
-                    </td>
-                    <td md-cell>
-                            <md-button class="md-icon-button" ng-click="vm.editImg($event,item,true)" aria-label="Empresa detalle">
-                                        <md-icon md-font-icon="icon-file-image-box" class="s16"></md-icon>
-                            </md-button>
-                    </td>
-                    <td md-cell>
-                        <md-button class="md-icon-button" ng-click="vm.openModal($event,item)" aria-label="Empresa detalle">
-                                    <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
-                        </md-button>
-                    </td>
-                    <td md-cell>
-                        <md-button class="md-icon-button" ng-click="vm.deleteItem($event,item)" aria-label="Empresa detalle">
-                                    <md-icon md-font-icon="icon-cancel" class="s16"></md-icon>
-                        </md-button>
-                    </td>
+                    </td> -->
                      
                    </tr>
         
@@ -69,7 +51,7 @@
              <md-table-pagination 
                                 md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"
                                 md-limit="vm.query.limit" md-limit-options="[5, 25, 50]" md-page="vm.query.page"
-                                md-total="{{vm.items.length}}" md-page-select>
+                                md-total="{{vm.tours.length}}" md-page-select>
              </md-table-pagination>
 
        </md-card>
