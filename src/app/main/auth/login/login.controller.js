@@ -41,8 +41,25 @@
                 localStorageService.set('token',response.token);
                 authService.getUser().then(function(response){
                     console.log(response.usuario);
-                    localStorageService.set('usuario',response.usuario);
-                    $state.go('app.pages.home');
+
+                    if (response.usuario.admin) {
+                        localStorageService.set('usuario',response.usuario);
+                        $state.go('app.pages.home');
+                    }else{
+                        localStorageService.remove('token');
+                        $mdDialog.show(
+                            $mdDialog
+                              .alert()
+                              .parent(angular.element(document.querySelector("document.body")))
+                              .clickOutsideToClose(false)
+                              .title("Iniciar sesión")
+                              .textContent("Usuario no autorizado")
+                              .ariaLabel("Usuario no autorizado")
+                              .ok("Aceptar")
+                              .targetEvent()
+                          );
+                    }
+                   
                 })
             }
           

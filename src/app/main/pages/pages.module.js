@@ -3,7 +3,10 @@
     'use strict';
     angular
         .module('app.pages', [
-            'app.pages.home'
+            'app.pages.home',
+            'app.pages.users',
+            'app.pages.agencias'
+
         ])
         .config(config);
 

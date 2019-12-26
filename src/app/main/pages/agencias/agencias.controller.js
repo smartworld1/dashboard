@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module("app.pages.home").controller("HomeController", HomeController);
+  angular.module("app.pages.agencias").controller("AgenciasController", AgenciasController);
 
   /** @ngInject */
-  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
+  function AgenciasController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
     var vm = this;
     var deferred = $q.defer();
     vm.tours = [];
@@ -13,7 +13,6 @@
     vm.deleteItem = deleteItem;
     vm.openModal = openModal;
     vm.openImg = openImg;
-    vm.editImg = editImg;
     vm.onChangeTour= onChangeTour;
     //////////
 
@@ -94,21 +93,7 @@
       $mdDialog.show({
         controller: DialogController,
         controllerAs: "vm",
-        templateUrl: "app/main/pages/home/dialogs/item.html",
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: true,
-        locals: {
-          Item: item
-        }
-      });
-    }
-
-    function editImg(ev, item) {
-      $mdDialog.show({
-        controller: DialogImgController,
-        controllerAs: "vm",
-        templateUrl: "app/main/pages/home/dialogs/img.html",
+        templateUrl: "app/main/pages/agencias/dialogs/item.html",
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: true,
@@ -146,60 +131,25 @@
     }
 
 
-
-    function DialogImgController($rootScope, $mdDialog, $log, $q,Item) {
-      var vm = this;
-      vm.item = Item;
-      vm.title = "Actualizar Imagen";
-      vm.closeDialog = closeDialog;
-      vm.addNewItem = addNewItem;
-
-      /**
-       * Add new item
-       */
-      function addNewItem() {
-        var item = angular.copy(vm.item);
-        var tempFile = vm.item.file;
-        delete item.file;
-        $rootScope.loader = true;
-        $q.when(tempFile)
-          .then(function() {
-            closeDialog();
-          })
-          .catch(function(error) {
-            $log.error("Error writing document: ", error);
-          })
-          .finally(function() {
-            $log.debug("End process");
-            $rootScope.loader = false;
-          });
-      }
-
-
-      function closeDialog() {
-        $mdDialog.hide();
-      }
-    }
-
     function DialogController(
       $rootScope,
       $mdDialog,
       $q,
       $log,
-      Item
+      Item,
+      tourService
     ) {
       var vm = this;
-      vm.title = "Editar Tour";
+      vm.title = "Editar Agencia";
       vm.item = angular.copy(Item);
       vm.minDate = new Date();
 
 
       if (!vm.item) {
-        vm.title = "Nuevo Tour";
+        vm.title = "Nueva Agencia";
         vm.newItem = true;
       } else {
         $log.debug("Edit", vm.item);
-        vm.item.eventDate = new Date(vm.item.eventDate.seconds * 1000);
       }
 
       vm.closeDialog = closeDialog;
@@ -211,12 +161,39 @@
        */
       function addNewItem() {
         var item = angular.copy(vm.item);
-        delete item.file;
+        
+        var tour = {
+            nombre: item.nombre,
+            descripcion: item.descripcion,
+            pais: null,
+            ciudad: null,
+            estado:null,
+            coords: null,
+            imgs: [],
+            created:new Date(),
+            updated:new Date(),
+            idiomas:null,
+            requisitos:null,
+            fecha:null,
+            hora:null,
+            puntoEncuento:null,
+            type:'agencia'
+        }
+        console.log(tour)
+  
         $rootScope.loader = true;
-        $q.when().then(function() {
-            $log.debug("Document update!");
-            $log.debug("New Item ", item);
-            closeDialog();
+        tourService.crearTour(tour)
+          .then(function(response) {
+            console.log(response);
+            var id_tour = response["response"]["_id"];
+            tourService.uploadFile(vm.item.img,id_tour).then(function(reponse){
+                tourService.switchTour(reponse["response"]).then(function(reponse){
+                    console.log(reponse)
+                     // closeDialog();
+                });
+
+            })
+           
           })
           .catch(function(error) {
             $log.error("Error writing document: ", error);
@@ -225,6 +202,8 @@
             $log.debug("End process");
             $rootScope.loader = false;
           });
+
+      
       }
 
     

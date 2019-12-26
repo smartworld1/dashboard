@@ -1,20 +1,20 @@
 (function() {
   "use strict";
 
-  angular.module("app.pages.home").controller("HomeController", HomeController);
+  angular.module("app.pages.users").controller("UsersController", UsersController);
 
   /** @ngInject */
-  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
+  function UsersController($rootScope, $scope, $q, $log, $mdDialog, _,usersService) {
     var vm = this;
     var deferred = $q.defer();
-    vm.tours = [];
+    vm.users = [];
 
     // Methods
     vm.deleteItem = deleteItem;
     vm.openModal = openModal;
     vm.openImg = openImg;
     vm.editImg = editImg;
-    vm.onChangeTour= onChangeTour;
+    vm.onChangeUser= onChangeUser;
     //////////
 
     init();
@@ -45,9 +45,9 @@
       };
 
       vm.promise = deferred.promise;
-      tourService.getTours().then(function(tours){
-        vm.tours = tours.response;
-        console.log( vm.tours)
+      usersService.getUsers().then(function(tours){
+        vm.users = tours.response;
+        console.log( vm.users)
         deferred.resolve();
       }).catch(function(error){
           $log.error(error);
@@ -57,27 +57,18 @@
     
     }
 
-    function onChangeTour(item){
+    function onChangeUser(item){
         $rootScope.loader = true;
-       
-        var tour = {
-            pais: item.pais,
-            ciudad:item.ciudad,
-            nombre:item.nombre,
-            descripcion:item.descripcion,
-            coords:item.coords,
-            imgs:item.imgs,
-            estado:item.estado,
-            idiomas:item.idiomas,
-            requisitos:item.requisitos,
-            fecha:item.fecha,
-            hora:item.hora,
-            puntoEncuento:item.puntoEncuento,
-            type:item.type
-        };
-
-        delete tour._id;
-        tourService.switchTour(tour).then(function(response){
+        var user = {
+            nombre: item.nombre,
+            email : item.email ,
+            presentacion : item.presentacion,
+            avatar: item.avatar,
+            activo: item.activo ,
+            perfilFace: item.perfilFace,
+            promedioValoracion: item.promedioValoracion
+        }
+        usersService.switchUser(user).then(function(response){
             console.log(response)
             $rootScope.loader = false;
           }).catch(function(error){
@@ -94,7 +85,7 @@
       $mdDialog.show({
         controller: DialogController,
         controllerAs: "vm",
-        templateUrl: "app/main/pages/home/dialogs/item.html",
+        templateUrl: "app/main/pages/users/dialogs/item.html",
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: true,
@@ -108,7 +99,7 @@
       $mdDialog.show({
         controller: DialogImgController,
         controllerAs: "vm",
-        templateUrl: "app/main/pages/home/dialogs/img.html",
+        templateUrl: "app/main/pages/users/dialogs/img.html",
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: true,

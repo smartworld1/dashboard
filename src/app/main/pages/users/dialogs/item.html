@@ -1,0 +1,117 @@
+<!-- DIALOG -->
+<md-dialog class="home-dialog" aria-label="Nuevo Item">
+
+        <form name="itemForm" class="md-inline-form" novalidate>
+    
+            <!-- DIALOG TOOLBAR -->
+            <md-toolbar class="md-accent md-raised" layout="column">
+    
+                <!-- TOOLBAR TOP -->
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                    <span class="title">{{vm.title}}</span>
+                    <md-button class="md-icon-button" ng-click="vm.closeDialog()" aria-label="Cerrar dialog" >
+                        <md-icon md-font-icon="icon-close"></md-icon>
+                    </md-button>
+                </div>
+    
+            </md-toolbar>
+            <!-- / DIALOG TOOLBAR -->
+    
+            <!-- DIALOG CONTENT -->
+            <md-dialog-content ms-scroll>
+                    <md-input-container class="md-block" flex>
+                            <md-datepicker md-min-date="vm.minDate" ng-model="vm.item.eventDate" md-placeholder="Ingrese la fecha" md-open-on-focus required></md-datepicker>
+                            <div ng-messages="itemForm.eventDate.$error" role="alert" >
+                                    <div ng-message="required">
+                                        <span >La nombre es requerido.</span>
+                                    </div>
+                            </div>
+                        </md-input-container>
+                <md-input-container class="md-block">
+                    <label >Nombre (requerido)</label>
+                    <input name="name" ng-model="vm.item.name" type="text" required md-autofocus>
+                    <div ng-messages="itemForm.name.$error" role="alert" >
+                            <div ng-message="required">
+                                <span >La nombre es requerido.</span>
+                            </div>
+                    </div>
+                </md-input-container>
+                
+                    <md-input-container class="md-block">
+                            <label >Horario (requerido)</label>
+                            <input name="hour" ng-model="vm.item.hour" type="text" required >
+                            <div ng-messages="itemForm.hour.$error" role="alert" >
+                                    <div ng-message="required">
+                                        <span >El horario es requerido.</span>
+                                    </div>
+                            </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label >Descripción (requerida)</label>
+                        <input name="description" ng-model="vm.item.description" type="text" required >
+                        <div ng-messages="itemForm.description.$error" role="alert" >
+                                <div ng-message="required">
+                                    <span >La descripción es requerida.</span>
+                                </div>
+                        </div>
+                </md-input-container>
+                <div class="text-center" ng-if="vm.newItem">
+                    <img ng-src="{{vm.item.photo+'?alt=media'}}" alt="">
+                </div>
+                <choose-file layout="row" ng-if="vm.newItem">
+                        <input id="fileInput"  name="photo" type="file" class="ng-hide" required  ng-model="vm.item.file" ngf-select ngf-pattern="'image/*'" accept="image/*" ngf-max-size="1MB">
+                        <md-input-container flex class="md-block">
+                          <input type="text" ng-model="fileName" disabled>
+                          <div class="hint">Selecciona tu fotografia</div>
+                          <div class="md-input-messages-animation error-file" ng-if="itemForm.photo.$error.pattern">
+                                El formato de la Foto no es valido  
+                           </div>
+                           <div class="md-input-messages-animation error-file" ng-if="!itemForm.photo.$pristine && itemForm.photo.$error.required">
+                                La Foto del evento es requerida
+                           </div>
+                           <div class="md-input-messages-animation error-file" ng-if="itemForm.photo.$error.maxSize">
+                                La Foto supera el tamaño permitido  max 1MB
+                           </div>
+                        </md-input-container>
+                        <div>
+                          <md-button id="uploadButton" class="md-raised md-fab md-mini">
+                            <md-icon md-font-icon="icon-file-image-box" class="s16"></md-icon>
+                          </md-button>
+                        </div>
+                </choose-file> 
+    
+               
+    
+              
+              
+    
+            </md-dialog-content>
+            <!-- / DIALOG CONTENT -->
+    
+            <!-- DIALOG ACTIONS -->
+            <md-dialog-actions layout="row" layout-align="space-between center">
+                <div layout="row" layout-align="start center">
+                    <md-button type="submit" ng-if="!vm.newItem" ng-click="vm.saveItem()"
+                               class="send-button  md-raised"
+                               ng-disabled="itemForm.$invalid || itemForm.$pristine"
+                             >
+                        Guardar
+                    </md-button>
+    
+                    <md-button type="submit" ng-if="vm.newItem" ng-click="vm.addNewItem()"
+                               class="send-button  md-raised"
+                               ng-disabled="itemForm.$invalid || itemForm.$pristine"
+                              >
+                       Agregar Evento
+                    </md-button>
+    
+                </div>
+    
+                
+            </md-dialog-actions>
+            <!-- / DIALOG ACTIONS -->
+    
+        </form>
+    
+    </md-dialog>
+    <!-- / DIALOG -->

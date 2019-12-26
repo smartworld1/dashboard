@@ -20,7 +20,7 @@
     msNavigationServiceProvider.saveItem("Tours", {
         title: "Tours",
         state: 'app.pages.home',
-        weight: 6
+        weight: 8
     });
   }
 })();

@@ -1,8 +1,8 @@
-<div id="home" class="page-layout simple fullwidth " >
+<div id="users" class="page-layout simple fullwidth " >
     <div class="header " layout="row" layout-align="space-between center">
        <div layout="column" layout-align="start start">
           <div class="h1" layout="row" layout-align="start center">
-             <span>Tours</span>
+             <span>Usuarios</span>
           </div>
        </div>
        <div class="search" layout="row" layout-align="start center" flex>
@@ -19,26 +19,25 @@
                   <thead md-head md-order="vm.query.order" >
                        <tr md-row >
                         <th md-column>Nombre</th>
-                        <th md-column>Pais</th> 
-                        <th md-column>Ciudad</th> 
-                        <th md-column>Punto de encuentro</th> 
-                        <th md-column>Estado</th>
-
+                        <th md-column>Email</th> 
+                        <th md-column>Promedio Valoración</th> 
+                        <th md-column>Presentacion</th>
+                        <th md-column>Estado</th> 
                        </tr>
                    </thead>
                    <tbody md-body>
         
-                   <tr  md-row  md-select="item" md-on-select="vm.logItem" md-auto-select="vm.options.autoSelect" ng-repeat="item in vm.tours | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+                   <tr  md-row  md-select="item" md-on-select="vm.logItem" md-auto-select="vm.options.autoSelect" ng-repeat="item in vm.users | filter: vm.query.filter | orderBy: vm.query.order | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
                     <td md-cell>{{item.nombre}}</td>
-                    <td md-cell>{{item.pais}}</td>
-                    <td md-cell>{{item.ciudad}}</td>
-                    <td md-cell>{{item.puntoEncuento}}</td>
+                    <td md-cell>{{item.email}}</td>
+                    <td md-cell>{{item.promedioValoracion?item.promedioValoracion:'Sin calificación'}}</td>
+                    <td md-cell>{{item.presentacion?item.presentacion:'Sin presentación'}}</td>
                     <td md-cell>
-                        <md-switch ng-model="item.estado" aria-label="Switch 1" ng-change="vm.onChangeTour(item)">
-                            {{ item.estado?'Activo':'Inactivo' }}
-                         </md-switch>
+                        <md-switch ng-model="item.activo" aria-label="Switch 1" ng-change="vm.onChangeUser(item)">
+                           {{ item.activo?'Activo':'Inactivo' }}
+                        </md-switch>
+                        
                     </td>
-                     
                     <!-- <td md-cell>
                         <md-button class="md-icon-button" ng-click="vm.openImg($event,item)" aria-label="Empresa detalle">
                                 <md-icon md-font-icon="icon-link" class="s16"></md-icon>
@@ -55,7 +54,7 @@
              <md-table-pagination 
                                 md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"
                                 md-limit="vm.query.limit" md-limit-options="[5, 25, 50]" md-page="vm.query.page"
-                                md-total="{{vm.tours.length}}" md-page-select>
+                                md-total="{{vm.users.length}}" md-page-select>
              </md-table-pagination>
 
        </md-card>

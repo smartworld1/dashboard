@@ -1,15 +1,20 @@
-<div id="home" class="page-layout simple fullwidth " >
+<div id="agencias" class="page-layout simple fullwidth " >
     <div class="header " layout="row" layout-align="space-between center">
        <div layout="column" layout-align="start start">
           <div class="h1" layout="row" layout-align="start center">
-             <span>Tours</span>
+             <span>Agencias</span>
           </div>
        </div>
        <div class="search" layout="row" layout-align="start center" flex>
-                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
-                <input  class="search-input" ng-model="vm.query.filter" type="text" placeholder="Buscar"
-                        flex ng-model-options="{debounce: 1000}">
-       </div>
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input  class="search-input" ng-model="vm.query.filter" type="text" placeholder="Buscar"
+                flex ng-model-options="{debounce: 1000}" ng-change="vm.getItems()">
+        </div>
+        <div layout="row" layout="row" >
+        <md-button  class="md-raised md-secondary " ng-click="vm.openModal($event)" >
+            <span >Crear</span>
+        </md-button>
+        </div>
     </div>
     <!-- CONTENT -->
     <div class="content">
