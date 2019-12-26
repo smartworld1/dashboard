@@ -13,7 +13,6 @@
     vm.deleteItem = deleteItem;
     vm.openModal = openModal;
     vm.openImg = openImg;
-    vm.editImg = editImg;
     vm.onChangeUser= onChangeUser;
     //////////
 
@@ -59,14 +58,10 @@
 
     function onChangeUser(item){
         $rootScope.loader = true;
+
         var user = {
-            nombre: item.nombre,
-            email : item.email ,
-            presentacion : item.presentacion,
-            avatar: item.avatar,
-            activo: item.activo ,
-            perfilFace: item.perfilFace,
-            promedioValoracion: item.promedioValoracion
+            _id: item._id,
+            activo: item.activo 
         }
         usersService.switchUser(user).then(function(response){
             console.log(response)
@@ -95,20 +90,7 @@
       });
     }
 
-    function editImg(ev, item) {
-      $mdDialog.show({
-        controller: DialogImgController,
-        controllerAs: "vm",
-        templateUrl: "app/main/pages/users/dialogs/img.html",
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: true,
-        locals: {
-          Item: item
-        }
-      });
-    }
-
+   
     function deleteItem(ev, item) {
       var confirm = $mdDialog
         .confirm()
@@ -136,41 +118,6 @@
       });
     }
 
-
-
-    function DialogImgController($rootScope, $mdDialog, $log, $q,Item) {
-      var vm = this;
-      vm.item = Item;
-      vm.title = "Actualizar Imagen";
-      vm.closeDialog = closeDialog;
-      vm.addNewItem = addNewItem;
-
-      /**
-       * Add new item
-       */
-      function addNewItem() {
-        var item = angular.copy(vm.item);
-        var tempFile = vm.item.file;
-        delete item.file;
-        $rootScope.loader = true;
-        $q.when(tempFile)
-          .then(function() {
-            closeDialog();
-          })
-          .catch(function(error) {
-            $log.error("Error writing document: ", error);
-          })
-          .finally(function() {
-            $log.debug("End process");
-            $rootScope.loader = false;
-          });
-      }
-
-
-      function closeDialog() {
-        $mdDialog.hide();
-      }
-    }
 
     function DialogController(
       $rootScope,

@@ -8,14 +8,28 @@
         var basePath = 'https://api-tour.smartworld.cl';
         return {
             getTours: getTours,
+            getAgencias: getAgencias,
             switchTour: switchTour,
             crearTour: crearTour,
-            uploadFile: uploadFile
+            uploadFile: uploadFile,
+            updateTour:updateTour
         }
        
         function getTours() {
             var token = localStorageService.get('token');
-            return $http.get(basePath + '/api/tours', {
+            return $http.get(basePath + '/api/tours?type=free', {
+                headers: {
+                    'x-token': token
+                }
+            }).then(function successCallback(response) {
+                return response.data
+            })
+        }
+
+         
+        function getAgencias() {
+            var token = localStorageService.get('token');
+            return $http.get(basePath + '/api/tours?type=agencia', {
                 headers: {
                     'x-token': token
                 }
@@ -25,6 +39,16 @@
         }
 
         function switchTour(tour) {
+            var token = localStorageService.get('token');
+            return $http.put(basePath + '/api/tours',tour, {
+                headers: {
+                    'x-token': token
+                }
+            }).then(function successCallback(response) {
+                return response.data
+            })
+        }
+        function updateTour(tour) {
             var token = localStorageService.get('token');
             return $http.put(basePath + '/api/tours',tour, {
                 headers: {
@@ -46,15 +70,21 @@
             })
         }
 
-        function uploadFile(file, tour) {
+        function uploadFile(file, id) {
             var token = localStorageService.get('token');
-            const formData = new FormData();
-            formData.append("id_tour",tour);
-            formData.append("image",file,file.name);
+            console.log(file)
+            console.log(file.name)
+            console.log(id)
 
-            return $http.post(basePath + '/api/upload/',formData, {
+            var formData = new FormData();
+            formData.append("id_tour",id);
+            formData.append("image",file,file.name);
+            console.log(formData)
+            return $http.post(basePath + '/api/upload',formData, {
+                transformRequest: angular.identity,
                 headers: {
-                    'x-token': token
+                    'x-token': token,
+                    'Content-Type': undefined 
                 }
             }).then(function successCallback(response) {
                 return response.data

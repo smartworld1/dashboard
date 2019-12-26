@@ -23,6 +23,8 @@
                         <th md-column>Ciudad</th> 
                         <th md-column>Punto de encuentro</th> 
                         <th md-column>Estado</th>
+                        <th md-column>Editar</th>
+
 
                        </tr>
                    </thead>
@@ -38,6 +40,12 @@
                             {{ item.estado?'Activo':'Inactivo' }}
                          </md-switch>
                     </td>
+                      
+                    <td md-cell>
+                        <md-button class="edit-button md-icon-button" ng-click="vm.openModal($event,item)" aria-label="Empresa detalle">
+                                <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                        </md-button>
+                    </td> 
                      
                     <!-- <td md-cell>
                         <md-button class="md-icon-button" ng-click="vm.openImg($event,item)" aria-label="Empresa detalle">

@@ -24,7 +24,7 @@
 
         function switchUser(user) {
             var token = localStorageService.get('token');
-            return $http.post(basePath + '/api/user/update',user, {
+            return $http.post(basePath + '/api/user/updateActivo',user, {
                 headers: {
                     'x-token': token
                 }
