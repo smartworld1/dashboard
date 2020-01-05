@@ -40,59 +40,59 @@
                         </div>
                 </md-input-container>
                 
-                    <md-autocomplete flex required
-                         md-input-name="pais"
-                        ng-disabled="vm.isDisabled"
-                        md-no-cache="vm.noCache"
-                        md-selected-item="vm.item.pais"
-                        md-search-text="vm.paisText"
-                        md-selected-item-change="vm.selectedItemChange(item)"
-                        md-items="item in vm.querySearch(vm.paisText)"
-                        md-item-text="item.display"
-                        md-min-length="0"
-                        md-floating-label="Pais"
-                        input-aria-labelledby="favoriteStateLabel"
-                        input-aria-describedby="autocompleteDetailedDescription">
-                      <md-item-template>
-                        <span md-highlight-text="vm.paisText" md-highlight-flags="^i">{{item}}</span>
-                      </md-item-template>
-                      <div ng-messages="itemForm.pais.$error" ng-if="itemForm.pais.$touched">
-                            <div ng-message="required">
-                                    <span >El pais es requerido.</span>
-                                </div>
-  
-                        </div>
-                      <md-not-found>
-                            No hay pais que coincida con "{{vm.paisText}}".
-                      </md-not-found>
-                    </md-autocomplete>
+                <md-autocomplete flex required
+                md-input-name="pais"
+               ng-disabled="vm.isDisabled"
+               md-no-cache="vm.noCache"
+               md-selected-item="vm.item.pais"
+               md-search-text="vm.paisText"
+               md-selected-item-change="vm.selectedItemChange(item)"
+               md-items="item in vm.querySearch(vm.paisText)"
+               md-item-text="item.pais"
+               md-min-length="0"
+               md-floating-label="Pais"
+               input-aria-labelledby="favoriteStateLabel"
+               input-aria-describedby="autocompleteDetailedDescription">
+             <md-item-template>
+               <span md-highlight-text="vm.paisText" md-highlight-flags="^i">{{item.pais}}</span>
+             </md-item-template>
+             <div ng-messages="itemForm.pais.$error" ng-if="itemForm.pais.$touched">
+                   <div ng-message="required">
+                           <span >El pais es requerido.</span>
+                       </div>
 
-                    <md-autocomplete flex required
-                    md-input-name="pais"
-                   ng-disabled="vm.isDisabledCiuidad"
-                   md-no-cache="vm.noCache"
-                   md-selected-item="vm.item.ciudad"
-                   md-search-text="vm.ciudadText"
-                   md-selected-item-change="vm.selectedItemChangeCiudad(item)"
-                   md-items="item in vm.querySearchCiudad(vm.ciudadText)"
-                   md-item-text="item.display"
-                   md-min-length="0"
-                   md-floating-label="Ciudad"
-                   input-aria-labelledby="favoriteStateLabel"
-                   input-aria-describedby="autocompleteDetailedDescription">
-                 <md-item-template>
-                   <span md-highlight-text="vm.ciudadText" md-highlight-flags="^i">{{item}}</span>
-                 </md-item-template>
-                 <div ng-messages="itemForm.ciudad.$error" ng-if="itemForm.ciudad.$touched">
-                       <div ng-message="required">
-                               <span >La ciudad es requerida.</span>
-                           </div>
+               </div>
+             <md-not-found>
+                   No hay pais que coincida con "{{vm.paisText}}".
+             </md-not-found>
+           </md-autocomplete>
 
-                   </div>
-                 <md-not-found>
-                       No hay cuidad que coincida con "{{vm.cuidadText}}".
-                 </md-not-found>
-               </md-autocomplete>
+           <md-autocomplete flex required
+           md-input-name="pais"
+          ng-disabled="vm.isDisabledCiuidad"
+          md-no-cache="vm.noCache"
+          md-selected-item="vm.item.ciudad"
+          md-search-text="vm.ciudadText"
+          md-selected-item-change="vm.selectedItemChangeCiudad(item)"
+          md-items="item in vm.querySearchCiudad(vm.ciudadText)"
+          md-item-text="item.ciudad"
+          md-min-length="0"
+          md-floating-label="Ciudad"
+          input-aria-labelledby="favoriteStateLabel"
+          input-aria-describedby="autocompleteDetailedDescription">
+        <md-item-template>
+          <span md-highlight-text="vm.ciudadText" md-highlight-flags="^i">{{item.ciudad}}</span>
+        </md-item-template>
+        <div ng-messages="itemForm.ciudad.$error" ng-if="itemForm.ciudad.$touched">
+              <div ng-message="required">
+                      <span >La ciudad es requerida.</span>
+                  </div>
+
+          </div>
+        <md-not-found>
+              No hay cuidad que coincida con "{{vm.cuidadText}}".
+        </md-not-found>
+      </md-autocomplete>
 
                 <md-input-container class="md-block">
                     <label >Idiomas</label>

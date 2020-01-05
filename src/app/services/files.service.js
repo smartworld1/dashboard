@@ -7,44 +7,72 @@
     function filesService($q, _, $http) {
         return {
             getPaises: getPaises,
-            getCiudades: getCiudades
+            getCiudades: getCiudades,
+            getPaisesByCode: getPaisesByCode,
+            getCiudadesByCode:getCiudadesByCode
         }
        
         function getPaises(textPais){
-            return $http.get('assets/files/paises.json').then(function (response) {
-                var data = response.data;
-                var paises = Object.keys(data);
+            
+            return $http.get('assets/files/paises_multi.json').then(function (response) {
+                var idioma = 'es';
+                var paises = response.data;
                 paises = _.map(paises,function (k) {
-                  return k;
+                  return {
+                    "pais":k["pais_"+idioma],
+                    "codigo":k["codigo"]
+                  };
                 });
-              
+                
+                
                 if (textPais === '') {
                   return paises;
                 }
               
                 paises = _.filter(paises, function (item) {
-                  return item.toLowerCase().indexOf(textPais.toLowerCase()) > -1;
+                  return item["pais"].toLowerCase().indexOf(textPais.toLowerCase()) > -1;
                 });
                 return paises;
               });
             
       }
 
+      function getPaisesByCode(codigo){
+        return $http.get('assets/files/paises_multi.json').then(function (response) {
+            var idioma = 'es';
+            var paises = response.data;
+            paises = _.map(paises,function (k) {
+              return {
+                "pais":k["pais_"+idioma],
+                "codigo":k["codigo"]
+              };
+            });
+          
+            var pais = _.find(paises, function (item) {
+              return item["codigo"] === codigo;
+            });
+            return pais;
+          });
+        
+  }
 
+      
+  
     
     
       function getCiudades(textPais, textCuidad) {
-        return $http.get('assets/files/paises.json').then(function (response) {
-            var data = response.data;
-            var paises = Object.keys(data);
+        return $http.get('assets/files/paises_multi.json').then(function (response) {
+            var idioma = 'es';
+            var paises = response.data;
             paises = _.map(paises,function (k) {
-            return {
-              nombre: k,
-              ciudades: data[k]
-            };
-          });
+              return {
+                "pais":k["pais_"+idioma],
+                "codigo":k["codigo"],
+                "ciudades":k["ciudades"]
+              };
+          });        
           var pais = _.find(paises,function (item) {
-            return item.nombre.toLowerCase() === textPais.toLowerCase();
+            return item.pais.toLowerCase() === textPais.pais.toLowerCase();
           });
       
           if (textCuidad === '') {
@@ -52,13 +80,39 @@
           }
       
           var ciudades = _.filter(pais.ciudades,function (ciudad) {
-            return ciudad.toLowerCase().indexOf(textCuidad.toLowerCase()) > -1;
+            return ciudad.ciudad.toLowerCase().indexOf(textCuidad.toLowerCase()) > -1;
           });
           return ciudades;
+        });
+      }
+
+      function getCiudadesByCode(codigoPais, codigoCiudad) {
+        return $http.get('assets/files/paises_multi.json').then(function (response) {
+            var idioma = 'es';
+            var paises = response.data;
+            paises = _.map(paises,function (k) {
+              return {
+                "pais":k["pais_"+idioma],
+                "codigo":k["codigo"],
+                "ciudades":k["ciudades"]
+              };
+          });        
+
+          var pais = _.find(paises, function (item) {
+            return item["codigo"] === codigoPais;
+          });
+    
+          var ciudad = _.find(pais.ciudades,function (ciudad) {
+            return ciudad.cod_ciudad == codigoCiudad;
+          });
+          return ciudad;
         });
       }
       
 
 
     }
+
+   
+    
 })();

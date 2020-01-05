@@ -39,8 +39,8 @@
                     <td md-cell>{{item.nombre}}</td>
                     <td md-cell>{{item.descripcion}}</td>
                     <td md-cell>{{item.idiomas}}</td>
-                    <td md-cell>{{item.pais}}</td>
-                    <td md-cell>{{item.ciudad}}</td>
+                    <td md-cell>{{item.pais.pais }}</td>
+                    <td md-cell>{{item.ciudad.ciudad}}</td>
                     <td md-cell>
                         <md-switch ng-model="item.estado" aria-label="Switch 1" ng-change="vm.onChangeTour(item)">
                             {{ item.estado?'Activo':'Inactivo' }}

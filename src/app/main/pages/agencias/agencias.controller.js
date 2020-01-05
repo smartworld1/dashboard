@@ -4,7 +4,7 @@
   angular.module("app.pages.agencias").controller("AgenciasController", AgenciasController);
 
   /** @ngInject */
-  function AgenciasController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
+  function AgenciasController($rootScope, $scope, $q, $log, $mdDialog, _,tourService,filesService) {
     var vm = this;
     var deferred = $q.defer();
     vm.tours = [];
@@ -44,10 +44,23 @@
       };
 
       vm.promise = deferred.promise;
-      tourService.getAgencias().then(function(tours){
-        vm.tours = tours.response;
-        console.log( vm.tours)
-        deferred.resolve();
+      tourService.getTours().then(function(tours){
+        
+        $q.all(_.map(tours.response, function(tour){
+           var codigo= tour.pais;
+          return filesService.getPaisesByCode(codigo).then(function(pais){
+            tour.pais= pais;
+            return filesService.getCiudadesByCode(codigo,tour.ciudad);
+          }).then(function(cuidad){
+            tour.ciudad= cuidad;
+            return tour
+          })
+        })).then(function(tours){
+          vm.tours = tours;
+          console.table( vm.tours)
+          deferred.resolve();
+
+        })
       }).catch(function(error){
           $log.error(error);
 
@@ -175,7 +188,6 @@
     }
 
     function querySearchCiudad(query){
-      console.log(vm.item.pais);
       if(!vm.item.pais){
         return []
       }
@@ -203,12 +215,11 @@
        */
       function addNewItem() {
         var item = angular.copy(vm.item);
-        
         var tour = {
             nombre: item.nombre,
             descripcion: item.descripcion,
-            pais: item.pais.toLowerCase(),
-            ciudad: item.ciudad.toLowerCase(),
+            pais: item.pais.codigo,
+            ciudad: item.ciudad.cod_ciudad,
             estado:true,
             coords: null,
             imgs: [],
@@ -219,7 +230,6 @@
             puntoEncuento:null,
             type:'agencia'
         }
-  
         $rootScope.loader = true;
         tourService.crearTour(tour)
           .then(function(response) {
@@ -240,8 +250,8 @@
               var tourUpdate = {
                 nombre: item.nombre,
                 descripcion: item.descripcion,
-                pais: item.pais.toLowerCase(),
-                ciudad: item.ciudad.toLowerCase(),
+                pais: item.pais.codigo,
+                ciudad: item.ciudad.cod_ciudad,
                 estado:true,
                 coords: null,
                 imgs: imgsUrl,

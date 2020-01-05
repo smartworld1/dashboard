@@ -4,7 +4,7 @@
   angular.module("app.pages.home").controller("HomeController", HomeController);
 
   /** @ngInject */
-  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _,tourService) {
+  function HomeController($rootScope, $scope, $q, $log, $mdDialog, _,tourService,filesService) {
     var vm = this;
     var deferred = $q.defer();
     vm.tours = [];
@@ -46,9 +46,22 @@
 
       vm.promise = deferred.promise;
       tourService.getTours().then(function(tours){
-        vm.tours = tours.response;
-        console.log( vm.tours)
-        deferred.resolve();
+        
+        $q.all(_.map(tours.response, function(tour){
+           var codigo= tour.pais;
+          return filesService.getPaisesByCode(codigo).then(function(pais){
+            tour.pais= pais;
+            return filesService.getCiudadesByCode(codigo,tour.ciudad);
+          }).then(function(cuidad){
+            tour.ciudad= cuidad;
+            return tour
+          })
+        })).then(function(tours){
+          vm.tours = tours;
+          console.table( vm.tours)
+          deferred.resolve();
+
+        })
       }).catch(function(error){
           $log.error(error);
 
@@ -248,8 +261,8 @@
         var tour = {
             nombre: item.nombre,
             descripcion: item.descripcion,
-            pais: item.pais.toLowerCase(),
-            ciudad: item.ciudad.toLowerCase(),
+            pais: item.pais.codigo,
+            ciudad: item.ciudad.cod_ciudad,
             estado:true,
             coords: null,
             imgs: [],
@@ -281,8 +294,8 @@
               var tourUpdate = {
                 nombre: item.nombre,
                 descripcion: item.descripcion,
-                pais: item.pais.toLowerCase(),
-                ciudad: item.ciudad.toLowerCase(),
+                pais: item.pais.codigo,
+                ciudad: item.ciudad.cod_ciudad,
                 estado:true,
                 coords: null,
                 imgs: imgsUrl,
